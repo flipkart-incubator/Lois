@@ -104,6 +104,4 @@ public class Lois {
         Lois.go(new MulticastRelay<T>(sinkChannels,sourceChannel) );
     }
 
-
-
 }
