@@ -1,3 +1,19 @@
+/**
+ * Copyright 2014 Flipkart Internet, pvt ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.flipkart.lois;
 
 import com.flipkart.lois.channel.api.Channel;
@@ -88,10 +104,12 @@ public class LoisTest {
         while (sink1.isReceivable()){
             sink1.receive();
             sink1count++;
+            Thread.sleep(1);
         }
         while (sink2.isReceivable()){
             sink2.receive();
             sink2count++;
+            Thread.sleep(1);
         }
 
         assert sink1count+sink2count == 7;
@@ -120,6 +138,7 @@ public class LoisTest {
                 assert sink1.receive().equals("I");
             else
                 sink1.receive();
+            Thread.sleep(1);
             sink1count++;
         }
         //count is 3 because sink2 is blocked at 3 and the next element in source can't be processed yet
@@ -130,6 +149,7 @@ public class LoisTest {
                 assert sink2.receive().equals("I");
             else
                 sink2.receive();
+            Thread.sleep(1);
             sink2count++;
         }
         assert sink2count==4;
