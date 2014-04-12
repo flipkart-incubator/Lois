@@ -6,7 +6,27 @@
 
     <groupId>lois</groupId>
     <artifactId>lois</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <description>Go like channels for java</description>
+    <url>http://flipkart.github.io/Lois/</url>
+
+    <scm>
+        <connection>scm:git:https://github.com/Flipkart/Lois.git</connection>
+        <developerConnection>scm:git:https://github.com/Flipkart/Lois.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/Flipkart/Lois</url>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <dependencies>
 
@@ -17,6 +37,60 @@
             <version>6.8.8</version>
         </dependency>
 
+        <!-- javadoc -->
+        <!-- <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+        </dependency> -->
+
     </dependencies>
+
+    <!-- <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <configuration>
+                        <aggregate>true</aggregate>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <configuration>
+                        <show>public</show>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build> -->
+
+    <distributionManagement>
+        <repository>
+            <id>clojars</id>
+            <name>Clojars repository</name>
+            <url>https://clojars.org/repo</url>
+        </repository>
+    </distributionManagement>
     
 </project>
