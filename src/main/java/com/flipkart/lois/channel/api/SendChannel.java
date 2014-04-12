@@ -18,21 +18,32 @@ public interface SendChannel<T> {
      * a message. If the channel has been closed then a {@link com.flipkart.lois.channel.exceptions.ChannelClosedException} is thrown.
      * @param message
      * @throws com.flipkart.lois.channel.exceptions.ChannelClosedException
+     * @throws InterruptedException
      */
     void send(T message) throws ChannelClosedException, InterruptedException;
 
     /**
      * Send a message of Type {@link T} if the channel hasn't been closed and is available to send a message.
-     * If the channel is not, free put the calling thread in a wait state until it becomes available to send
+     * If the channel is not free put the calling thread in a wait state until it becomes available to send
      * a message until timeOut {@link java.util.concurrent.TimeUnit}'s have passed, at which point throw a {@link java.util.concurrent.TimeoutException}.
      * If the channel has been closed then a {@link ChannelClosedException} is thrown.
      * @param message
      * @param timeOut
      * @param timeUnit
      * @throws ChannelClosedException
-     * @throws java.util.concurrent.TimeoutException
+     * @throws TimeoutException
+     * @throws InterruptedException
      */
-    void send(T message, long timeOut, TimeUnit timeUnit) throws ChannelClosedException, TimeoutException, InterruptedException;
+    void send(T message, long timeOut, TimeUnit timeUnit) throws ChannelClosedException, TimeoutException ,InterruptedException;
+
+    /**
+     * A non blocking send of Type {@link T} if the channel hasn't been closed and is available to send a message.
+     * If the channel is not free return false, if the channel is available and send was successful return true.
+     * @param message
+     * @return true if send was successful, false if send failed at this instance.
+     * @throws ChannelClosedException
+     */
+    boolean trySend(T message) throws ChannelClosedException;
 
     /**
      * Close channel so that no new messages can be sent over this channel. The messages that are already available

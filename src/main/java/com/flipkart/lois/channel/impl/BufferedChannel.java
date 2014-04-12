@@ -16,7 +16,7 @@ import java.util.concurrent.TimeoutException;
 public class BufferedChannel<T> implements Channel<T> {
 
     private final ArrayBlockingQueue<T> buffer;
-    private boolean isChannelOpen = true;
+    private volatile boolean isChannelOpen = true;
     private int bufferSize;
 
     public BufferedChannel(final int bufferSize) {
@@ -33,24 +33,56 @@ public class BufferedChannel<T> implements Channel<T> {
     }
 
     @Override
-    public T receive(long timeOut, TimeUnit timeUnit) throws ChannelClosedException, TimeoutException, InterruptedException {
+    public T receive(final long timeOut, final TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
+        T message;
         if (!isOpen() && buffer.isEmpty())
             throw new ChannelClosedException("Channel has been closed");
         else
-            return buffer.poll(timeOut,timeUnit);
+            message = buffer.poll(timeOut,timeUnit);
+
+        if (message==null)
+            throw new TimeoutException("Receive Operation Timed Out");
+        else
+            return message;
+    }
+
+    @Override
+    public T tryReceive() throws ChannelClosedException {
+        T message;
+        message = buffer.poll();
+        if (message==null && !isOpen())
+            throw new ChannelClosedException("Channel has been closed");
+        else
+            return message;
     }
 
 
     @Override
-    public void send(T message) throws ChannelClosedException, InterruptedException {
+    public void send(final T message) throws ChannelClosedException, InterruptedException {
         if (isOpen())
             buffer.put(message);
+        else
+            throw new ChannelClosedException("Channel has been closed");
     }
 
     @Override
-    public void send(T message, long timeOut, TimeUnit timeUnit) throws ChannelClosedException, TimeoutException, InterruptedException {
+    public void send(final T message, final long timeOut, final TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
+        boolean sent=false;
         if(isOpen())
-            buffer.offer(message, timeOut, timeUnit);
+            sent = buffer.offer(message, timeOut, timeUnit);
+        else
+            throw new ChannelClosedException("Channel has been closed");
+
+        if(!sent)
+            throw new TimeoutException("Send Operation Timed Out");
+    }
+
+    @Override
+    public boolean trySend(T message) throws ChannelClosedException {
+        if (isOpen())
+            return buffer.offer(message);
+        else
+            throw new ChannelClosedException("Channel has been closed");
     }
 
     @Override
