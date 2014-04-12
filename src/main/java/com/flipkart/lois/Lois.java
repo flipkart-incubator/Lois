@@ -21,6 +21,14 @@ public class Lois {
      * @param routines
      */
     public static void go(Routine... routines) {
+        go(Arrays.asList(routines));
+    }
+
+    /**
+     * Runs {@link Routine}es on a threadpool where each routine is executed on a single thread
+     * @param routines
+     */
+    public static void go(List<Routine> routines) {
         for (Routine routine: routines){
             executorService.execute((Runnable)routine);
         }
@@ -76,7 +84,7 @@ public class Lois {
 
     /**
      * Multicasts messages of type {@link T}, from a single {@link ReceiveChannel} source to multiple
-     * {@link SendChannel} sinks
+     * {@link SendChannel} sinks. Can block on a sink that's not isSendable
      * @param sourceChannel
      * @param sinkChannels
      * @param <T>
@@ -87,7 +95,7 @@ public class Lois {
 
     /**
      * Multicasts messages of type {@link T}, from a single {@link ReceiveChannel} source to multiple
-     * {@link SendChannel} sinks
+     * {@link SendChannel} sinks. Can block on a sink that's not isSendable
      * @param sourceChannel
      * @param sinkChannels
      * @param <T>
