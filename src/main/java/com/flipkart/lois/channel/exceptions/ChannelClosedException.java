@@ -1,4 +1,4 @@
-package com.flipkart.lois.channel.api.exceptions;
+package com.flipkart.lois.channel.exceptions;
 
 /**
  * This is thrown when invalid operations on Channel are executed after it has been closed
