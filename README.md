@@ -9,6 +9,3 @@ Process calculus. The pivotal idea behind concurrent process communicating over 
 
 Lois brings the power and flexibility of this concurrent computational paradigm to Java.
 
-
-
-
