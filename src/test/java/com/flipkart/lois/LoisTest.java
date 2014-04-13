@@ -25,6 +25,9 @@ import com.flipkart.lois.channel.impl.SimpleChannel;
 import com.flipkart.lois.routine.Routine;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 public class LoisTest {
 
     private class SampRoutine implements Routine{
@@ -46,6 +49,7 @@ public class LoisTest {
             }
         }
     }
+
 
     @Test
     public void testGo() throws Exception {
@@ -157,4 +161,6 @@ public class LoisTest {
         assert sink1.receive().equals("Champion");
 
     }
+
+
 }

@@ -17,7 +17,11 @@
 package com.flipkart.lois.channel.impl;
 
 import com.flipkart.lois.channel.api.Channel;
+import com.flipkart.lois.channel.api.ReceiveChannel;
+import com.flipkart.lois.channel.api.SendChannel;
 import com.flipkart.lois.channel.exceptions.ChannelClosedException;
+import com.flipkart.lois.utils.Replicant;
+import com.rits.cloning.Cloner;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -76,7 +80,7 @@ public class BufferedChannel<T> implements Channel<T> {
     @Override
     public void send(final T message) throws ChannelClosedException, InterruptedException {
         if (isOpen())
-            buffer.put(message);
+            buffer.put(replicateMessage(message));
         else
             throw new ChannelClosedException("Channel has been closed");
     }
@@ -85,7 +89,7 @@ public class BufferedChannel<T> implements Channel<T> {
     public void send(final T message, final long timeOut, final TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
         boolean sent=false;
         if(isOpen())
-            sent = buffer.offer(message, timeOut, timeUnit);
+            sent = buffer.offer(replicateMessage(message), timeOut, timeUnit);
         else
             throw new ChannelClosedException("Channel has been closed");
 
@@ -96,7 +100,7 @@ public class BufferedChannel<T> implements Channel<T> {
     @Override
     public boolean trySend(T message) throws ChannelClosedException {
         if (isOpen())
-            return buffer.offer(message);
+            return buffer.offer(replicateMessage(message));
         else
             throw new ChannelClosedException("Channel has been closed");
     }
@@ -119,5 +123,14 @@ public class BufferedChannel<T> implements Channel<T> {
     @Override
     public boolean isSendable() throws ChannelClosedException {
         return buffer.remainingCapacity() > 0;
+    }
+
+    //creates deep copies of all messages that aren't channels
+    private static <T> T replicateMessage(T message){
+        if (message instanceof SendChannel ||message instanceof ReceiveChannel){
+            return message;
+        } else {
+            return Replicant.replicate(message);
+        }
     }
 }

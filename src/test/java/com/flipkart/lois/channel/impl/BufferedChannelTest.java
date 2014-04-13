@@ -30,6 +30,84 @@ import java.util.concurrent.TimeoutException;
 
 public class BufferedChannelTest {
 
+    private class Pojo{
+        private String name;
+
+        private Pojo(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    private class DummyChannel<T> implements Channel<T>{
+
+        private String value = "secret";
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public T receive() throws ChannelClosedException, InterruptedException {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public T receive(long timeOut, TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public T tryReceive() throws ChannelClosedException {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean isReceivable() throws ChannelClosedException {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void send(T message) throws ChannelClosedException, InterruptedException {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void send(T message, long timeOut, TimeUnit timeUnit) throws ChannelClosedException, TimeoutException, InterruptedException {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean trySend(T message) throws ChannelClosedException {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void close() {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean isOpen() {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public boolean isSendable() throws ChannelClosedException {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+    }
+
     private class Sender implements Routine{
 
         private SendChannel<String> sendChannel;
@@ -240,5 +318,26 @@ public class BufferedChannelTest {
         assert channel.isSendable();
         channel.send("dude");
         assert !channel.isSendable();
+    }
+
+    @Test
+    public void replicateTest() throws Exception{
+        Channel<Channel> channelChannel = new SimpleChannel<Channel>();
+        Channel<Pojo> pojoChannel = new SimpleChannel<Pojo>();
+
+        Pojo suman = new Pojo("suman");
+        DummyChannel<String> stringChannel = new DummyChannel<String>();
+
+        pojoChannel.send(suman);
+        Pojo karthik = pojoChannel.receive();
+        karthik.setName("karthik");
+
+        assert suman.getName().equals("suman"); //assert deepcopy has happened while passing message
+
+        channelChannel.send(stringChannel);
+        DummyChannel<String> targetChannel = (DummyChannel<String>)channelChannel.receive();
+        targetChannel.setValue("changed");
+
+        assert stringChannel.getValue().equals("changed");
     }
 }
