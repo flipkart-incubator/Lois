@@ -354,6 +354,11 @@ order constructs between can be built with ease, one is only limited by one's im
 
 The api docs can be found [here](http://flipkart-incubator.github.io/Lois/javadoc/index.html)
 
+##Contribution, Bugs and Feedback
+
+For bugs, questions and discussions please use the [Github Issues](https://github.com/flipkart-incubator/Lois/issues).
+Please follow the [contribution guidelines](https://github.com/flipkart-incubator/Lois/blob/master/CONTRIBUTING.md) when submitting pull requests.
+
 ##License
 
 Copyright 2014 Flipkart Internet, pvt ltd.
