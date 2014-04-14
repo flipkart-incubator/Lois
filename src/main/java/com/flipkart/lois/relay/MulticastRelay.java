@@ -40,7 +40,7 @@ public class MulticastRelay<T> implements Routine{
 
     /**
      * Constructor that takes a {@link List} of {@link SendChannel}s and {@link ReceiveChannel}
-     * @param sendChannel
+     * @param sendChannels
      * @param receiveChannel
      */
     public MulticastRelay(List<SendChannel<T>> sendChannels, ReceiveChannel<T> receiveChannel) {
