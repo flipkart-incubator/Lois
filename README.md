@@ -1,5 +1,5 @@
 #Lois
-####golang like channels for java
+####Golang like channels for java
 
 Lois is a Java library that provides golang like channel abstraction and implementation.
 Go's channel abstraction is heavily influenced by Communicating Sequential Processes(CSP) and
@@ -349,6 +349,37 @@ Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
 
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.
+
+##Maven Artifact
+
+Add the following repository to your pom.xml
+
+```xml
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+```
+
+And add the following dependency to start using GraceKelly in your maven project.
+
+```xml
+   <dependency>
+     <groupId>com.flipkart.lego</groupId>
+     <artifactId>lois</artifactId>
+     <version>1.1.0</version>
+   </dependency>
+```
+
+##Documentation
+
+The api docs can be found [here](http://flipkart-incubator.github.io/Lois/javadoc/index.html)
+
+##Contribution, Bugs and Feedback
+
+For bugs, questions and discussions please use the [Github Issues](https://github.com/flipkart-incubator/Lois/issues).
+Please follow the [contribution guidelines](https://github.com/flipkart-incubator/Lois/blob/master/CONTRIBUTING.md) when submitting pull requests.
 
 ##License
 

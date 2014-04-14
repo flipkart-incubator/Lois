@@ -4,19 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.flipkart</groupId>
-    <artifactId>Lois</artifactId>
+    <groupId>com.flipkart.lego</groupId>
+    <artifactId>lois</artifactId>
     <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <description>Go like channels for java</description>
-    <url>http://flipkart.github.io/Lois/</url>
+    <url>http://flipkart-incubator.github.io/Lois/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/Flipkart/Lois.git</connection>
-        <developerConnection>scm:git:https://github.com/Flipkart/Lois.git</developerConnection>
+        <connection>scm:git:https://github.com/flipkart-incubator/Lois.git</connection>
+        <developerConnection>scm:git:https://github.com/flipkart-incubator/Lois.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/Flipkart/Lois</url>
+        <url>https://github.com/flipkart-incubator/Lois</url>
     </scm>
 
     <licenses>
