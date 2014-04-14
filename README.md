@@ -9,7 +9,7 @@ Process calculus. The pivotal idea behind concurrent process communicating over 
 
 Lois brings the power and flexibility of this concurrent computational paradigm to Java.
 
-##Channel
+###Channel
 ####A conduit for communication and coordination
 
 In Lois a channel is a mechanism for two independent threads of execution or **Routines** to either communicate or
@@ -232,7 +232,7 @@ ReceiveChannel receiveChannel = new SimpleChannel();
 receiveChannel.receive();
 ```
 
-####Routines
+###Routines
 
 Routines are simple runnables that can be run by Lois on independent threads.
 
@@ -253,7 +253,7 @@ Lois.go(sampRoutine);
 One need not use routines to use channels. Any way of sharing reference to a channel by independent threads should
 enable them to use the channel to send and receive messages.
 
-####Value vs Reference
+###Value vs Reference
 
 The value of **"Don't communicate by sharing state, share state by communicating"** can only be realized if there is
 no shared state among concurrent threads. To accomplish this one should refrain from sharing references to the same
@@ -266,7 +266,7 @@ This ensures that a channel can be sent over channels while still retaining the 
 any threads that still have a reference to the sent/received channel. This leads to incredible flexibility and power
 where channels can be used to dynamically alter the network of communicating and coordinating nodes at runtime.
 
-####Higher order channel usage
+###Higher order channel usage
 
 Lois also provides several simple ways of connecting channels together to create useful patterns.
 
@@ -349,6 +349,10 @@ Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
 
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.
+
+###Examples
+
+
 
 ##Maven Artifact
 
