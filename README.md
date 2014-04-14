@@ -1,5 +1,5 @@
 #Lois
-####golang like channels for java
+####Golang like channels for java
 
 Lois is a Java library that provides golang like channel abstraction and implementation.
 Go's channel abstraction is heavily influenced by Communicating Sequential Processes(CSP) and
