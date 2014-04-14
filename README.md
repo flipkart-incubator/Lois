@@ -350,6 +350,28 @@ Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.
 
+##Maven Artifact
+
+Add the following repository to your pom.xml
+
+```xml
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+```
+
+And add the following dependency to start using GraceKelly in your maven project.
+
+```xml
+   <dependency>
+     <groupId>com.flipkart.lego</groupId>
+     <artifactId>lois</artifactId>
+     <version>1.1.0</version>
+   </dependency>
+```
+
 ##Documentation
 
 The api docs can be found [here](http://flipkart-incubator.github.io/Lois/javadoc/index.html)
