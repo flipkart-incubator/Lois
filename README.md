@@ -75,7 +75,7 @@ Similarly receive blocks on a channel until there is a message to receive on it.
 String message = typedChannel.receive();
 ```
 
-One can used variant's of send and receive with timeouts to avoid blocking threads indefinitely.
+One can use variants of send and receive with timeouts to avoid blocking threads indefinitely.
 
 ```java
 /**
