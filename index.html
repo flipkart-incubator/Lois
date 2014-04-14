@@ -42,7 +42,7 @@
 <a name="lois" class="anchor" href="#lois"><span class="octicon octicon-link"></span></a>Lois</h1>
 
 <h4>
-<a name="golang-like-channels-for-java" class="anchor" href="#golang-like-channels-for-java"><span class="octicon octicon-link"></span></a>golang like channels for java</h4>
+<a name="golang-like-channels-for-java" class="anchor" href="#golang-like-channels-for-java"><span class="octicon octicon-link"></span></a>Golang like channels for java</h4>
 
 <p>Lois is a Java library that provides golang like channel abstraction and implementation.
 Go's channel abstraction is heavily influenced by Communicating Sequential Processes(CSP) and
@@ -388,6 +388,38 @@ where channels can be used to dynamically alter the network of communicating and
 
 <p>These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.</p>
+
+<h2>
+<a name="maven-artifact" class="anchor" href="#maven-artifact"><span class="octicon octicon-link"></span></a>Maven Artifact</h2>
+
+<p>Add the following repository to your pom.xml</p>
+
+<div class="highlight highlight-xml"><pre>    <span class="nt">&lt;repository&gt;</span>
+      <span class="nt">&lt;id&gt;</span>clojars<span class="nt">&lt;/id&gt;</span>
+      <span class="nt">&lt;name&gt;</span>Clojars repository<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;url&gt;</span>https://clojars.org/repo<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;/repository&gt;</span>
+</pre></div>
+
+<p>And add the following dependency to start using GraceKelly in your maven project.</p>
+
+<div class="highlight highlight-xml"><pre>   <span class="nt">&lt;dependency&gt;</span>
+     <span class="nt">&lt;groupId&gt;</span>com.flipkart.lego<span class="nt">&lt;/groupId&gt;</span>
+     <span class="nt">&lt;artifactId&gt;</span>lois<span class="nt">&lt;/artifactId&gt;</span>
+     <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+   <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>The api docs can be found <a href="http://flipkart-incubator.github.io/Lois/javadoc/index.html">here</a></p>
+
+<h2>
+<a name="contribution-bugs-and-feedback" class="anchor" href="#contribution-bugs-and-feedback"><span class="octicon octicon-link"></span></a>Contribution, Bugs and Feedback</h2>
+
+<p>For bugs, questions and discussions please use the <a href="https://github.com/flipkart-incubator/Lois/issues">Github Issues</a>.
+Please follow the <a href="https://github.com/flipkart-incubator/Lois/blob/master/CONTRIBUTING.md">contribution guidelines</a> when submitting pull requests.</p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
