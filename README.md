@@ -352,7 +352,61 @@ order constructs between can be built with ease, one is only limited by one's im
 
 ###Examples
 
+####Simple parllelization
 
+In this example we create a simple web page downloader using multiple parallel crawlers
+and a web page persister.
+
+```java
+//Create a list to hold worker channels
+List<Channel<WebPage>> crawlerChannels = new ArrayList<Channel<WebPage>>();
+
+//create 10 crawlers each with a dedicated channel over which they will
+//send the webpages they crawl.
+for (int workerCount=0;workerCount<10;workerCount++){
+
+    //create a crawlerChannel
+    Channel<WebPage> crawlerChannel = new BufferedChannel<WebPage>(10);
+
+    //run a crawler on an independent thread with a beginning url and
+    //a crawlerChannel over which to send web pages
+    Lois.go(new Crawler(getBeginUrl(), crawlerChannel));
+
+    //add the crawler channel to list of crawlerchannels
+    crawlerChannels.add(crawlerChannel);
+}
+
+//create a sink channel to consume messages from all the crawler channels
+SendChannel<WebPage> sinkChannel = new BufferedChannel<WebPage>(10);
+
+//multiplex crawler channels on to a sink channel
+Lois.mux(sinkChannel, crawlerChannels);
+
+//persist webpages on disk
+Lois.go(new WebPagePersister(sinkChannel));
+```
+
+####Rudimentary Connection Pool
+
+In this example we create a simple, threadsafe connection pool.
+
+```java
+//creates a list of 5 connections
+List<Connection> connectionList = ConnectionFactory.createConnections("localhost", 80, 5);
+
+//create a BufferedChannel to hold 5 connections
+Channel<Connection> connectionPoolChannel = new BufferedChannel<Connection>(5);
+
+for (Connection connection: connectionList){
+    connectionPoolChannel.send(connection);
+}
+
+//to take a connection from the pool any thread can receive a connection
+Connection connection = connectionPoolChannel.receive();
+
+//to release a connection any thread can send it to the channel
+connectionPoolChannel.send(connection);
+```
 
 ##Maven Artifact
 
