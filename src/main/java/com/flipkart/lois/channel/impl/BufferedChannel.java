@@ -37,7 +37,7 @@ public class BufferedChannel<T> implements Channel<T> {
 
     private final ArrayBlockingQueue<T> buffer;
     private volatile boolean isChannelOpen = true;
-    private int bufferSize;
+    private final int bufferSize;
 
     public BufferedChannel(final int bufferSize) {
         this.bufferSize = bufferSize;
