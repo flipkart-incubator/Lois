@@ -17,15 +17,15 @@ coordinate with each other. A channel can be typed and will carry a message only
 also be untyped allowing it to carry a message of any type.
 
 ```java
-           /**
-            * This is a typed channel
-            */
-           Channel<String> typedChannel = new SimpleChannel<String>();
+/**
+* This is a typed channel
+*/
+Channel<String> typedChannel = new SimpleChannel<String>();
 
-           /**
-            * This is an untyped channel
-            */
-           Channel untypedChannel = new SimpleChannel();
+/**
+* This is an untyped channel
+*/
+Channel untypedChannel = new SimpleChannel();
 ```
 
 ####Send and Receive
@@ -35,15 +35,15 @@ way in which threads and Routines use to communicate and coordinate with each ot
 and receive operations over a channel.
 
 ```java
-        /**
-         * Thread 1 send's a message over a typed channel
-         */
-        typedChannel.send(" Hello ");
+/**
+ * Thread 1 send's a message over a typed channel
+ */
+typedChannel.send(" Hello ");
 
-        /**
-         * Thread 2 receives a message over a typed channel
-         */
-        String message = typedChannel.receive();
+/**
+ * Thread 2 receives a message over a typed channel
+ */
+String message = typedChannel.receive();
 ```
 
 In the above example we see how a channel can be used to send a receive messages in concurrent threads or Routines.
@@ -51,67 +51,67 @@ Both send and receive can block and place the calling thread in a wait state unt
 receivable.
 
 ```java
-        Channel<String> typedChannel = new SimpleChannel<String>();
+Channel<String> typedChannel = new SimpleChannel<String>();
 
-        typedChannel.send(" Hello ");
+typedChannel.send(" Hello ");
 
-        /**
-         * Since a SimpleChannel can carry only one message
-         * at a time, calling send on the channel when the
-         * previous message hasn't been "received" yet
-         * blocks the thread and puts it in a wait state.
-         */
-        typedChannel.send(" World! ");
+/**
+ * Since a SimpleChannel can carry only one message
+ * at a time, calling send on the channel when the
+ * previous message hasn't been "received" yet
+ * blocks the thread and puts it in a wait state.
+ */
+typedChannel.send(" World! ");
 ```
 
 Similarly receive blocks on a channel until there is a message to receive on it.
 
 ```java
-         /**
-         * Receive blocks the thread and put's it in a wait
-         * state until there is something to receive over
-         * the channel.
-         */
-        String message = typedChannel.receive();
+ /**
+ * Receive blocks the thread and put's it in a wait
+ * state until there is something to receive over
+ * the channel.
+ */
+String message = typedChannel.receive();
 ```
 
 One can used variant's of send and receive with timeouts to avoid blocking threads indefinitely.
 
 ```java
-        /**
-         * A variant of send that takes a long and a TimeUnit to
-         * timeout on a channel. The following code waits for 10
-         * milliseconds and timesout to throw a  TimeoutException.
-         */
-        typedChannel.send(" time's running out! ",10, TimeUnit.MILLISECONDS);
+/**
+ * A variant of send that takes a long and a TimeUnit to
+ * timeout on a channel. The following code waits for 10
+ * milliseconds and timesout to throw a  TimeoutException.
+ */
+typedChannel.send(" time's running out! ",10, TimeUnit.MILLISECONDS);
 
-        /**
-         * A variant of receive that takes a long and a TimeUnit to
-         * timeout on a channel. The following code waits for 10
-         * milliseconds and timesout to throw a  TimeoutException.
-         */
-        typedChannel.receive(10, TimeUnit.MILLISECONDS);
+/**
+ * A variant of receive that takes a long and a TimeUnit to
+ * timeout on a channel. The following code waits for 10
+ * milliseconds and timesout to throw a  TimeoutException.
+ */
+typedChannel.receive(10, TimeUnit.MILLISECONDS);
 ```
 
 One can also use non blocking variants of send and receive.
 
 ```java
-        /**
-         * A non blocking variant of send that attempts to send a
-         * message over the channel. It returns "true" if the
-         * message could be successfully sent, or a false if the
-         * message could not be sent over the channel.
-         */
-        typedChannel.trySend(" trying to send ");
+/**
+ * A non blocking variant of send that attempts to send a
+ * message over the channel. It returns "true" if the
+ * message could be successfully sent, or a false if the
+ * message could not be sent over the channel.
+ */
+typedChannel.trySend(" trying to send ");
 
-        /**
-         * A non blocking variant of receive that attempts to
-         * receive a message over the channel. It returns the
-         * message if a message was successfully received, or
-         * a "null" if a message could not be received over
-         * the channel.
-         */
-        typedChannel.tryReceive();
+/**
+ * A non blocking variant of receive that attempts to
+ * receive a message over the channel. It returns the
+ * message if a message was successfully received, or
+ * a "null" if a message could not be received over
+ * the channel.
+ */
+typedChannel.tryReceive();
 ```
 
 One can also check whether a channel is ready to send or receive messages by calling **isSendable** and **isReceivable**
@@ -120,17 +120,17 @@ then these can't be safely used to send/receive because the state of the channel
 send/receive is called.
 
 ```java
-        /**
-         * Return's true if the channel has space to accept
-         * messages
-         */
-        channel.isSendable();
+/**
+ * Return's true if the channel has space to accept
+ * messages
+ */
+channel.isSendable();
 
-        /**
-         * Return's true if the channel has atleast one message
-         * that can be received.
-         */
-        channel.isReceivable();
+/**
+ * Return's true if the channel has atleast one message
+ * that can be received.
+ */
+channel.isReceivable();
 ```
 
 ####Closed for business
@@ -139,10 +139,10 @@ A channel can be in one of two states; either **open** or **closed**. By default
 and can send or receive messages freely. But a channel can be closed and once closed cannot be opened again.
 
 ```java
-        /**
-         * One can close a channel by calling close on it
-         */
-        channel.close();
+/**
+ * One can close a channel by calling close on it
+ */
+channel.close();
 ```
 
 Once a channel is closed trying to send any message's over it will throw a **ChannelClosedException**. One can still
@@ -150,12 +150,12 @@ receive all pending messages in the channel, but once all the pending messages h
 the channel results in a **ChannelClosedException**.
 
 ```java
-        channel.close();
+channel.close();
 
-        /**
-         * Throws a ChannelClosedException
-         */
-        channel.send(" doomed to fail ");
+/**
+ * Throws a ChannelClosedException
+ */
+channel.send(" doomed to fail ");
 ```
 
 One has to think carefully about how and when to close a channel. Since a channel could potentially be shared by multiple
@@ -163,10 +163,10 @@ threads of execution, closing a channel would make it impossible for other chann
 check whether a channel is open or closed in the following way.
 
 ```java
-        /**
-         * Return's true if the channel is open false if closed
-         */
-        channel.isOpen();
+/**
+ * Return's true if the channel is open false if closed
+ */
+channel.isOpen();
 ```
 
 ####Buffered and Simple channels
@@ -175,38 +175,38 @@ The difference between a Buffered and a Simple channel is the number of messages
 channel can hold only one message in the channel.
 
 ```java
-        /**
-         * This is a simple channel
-         */
-        Channel simpleChannel = new SimpleChannel();
+/**
+ * This is a simple channel
+ */
+Channel simpleChannel = new SimpleChannel();
 
-        simpleChannel.send("hello");
+simpleChannel.send("hello");
 
-        /**
-         * This blocks if the first message isn't received yet
-         * because a SimpleChannel has a capacity of one message
-         */
-        simpleChannel.send("world");
+/**
+ * This blocks if the first message isn't received yet
+ * because a SimpleChannel has a capacity of one message
+ */
+simpleChannel.send("world");
 ```
 
 A buffered channel on the other hand can hold a variable number of messages. The capacity of a buffered channel is
 specified at the time of creation.
 
 ```java
-        /**
-         * A buffered channel with a capacity of 3
-         */
-        Channel bufferedChannel = new BufferedChannel(3);
+/**
+ * A buffered channel with a capacity of 3
+ */
+Channel bufferedChannel = new BufferedChannel(3);
 
-        channel.send(1);
-        channel.send(2);
-        channel.send(3);
+channel.send(1);
+channel.send(2);
+channel.send(3);
 
-        /**
-         * This blocks on send if the first 3 messages haven't
-         * been received yet.
-         */
-        channel.send(4);
+/**
+ * This blocks on send if the first 3 messages haven't
+ * been received yet.
+ */
+channel.send(4);
 ```
 
 Simple channels are useful for fine grained coordination while buffered channels are performant and useful when dealing
@@ -219,17 +219,17 @@ any thread that has access to it. However, most of the time a thread would only 
 messages exclusively. To enforce this behaviour one can use send or recieve channels
 
 ```java
-        /**
-         * This channel can only be used to send messages
-         */
-        SendChannel sendChannel = new SimpleChannel();
-        sendChannel.send("I can send only");
+/**
+ * This channel can only be used to send messages
+ */
+SendChannel sendChannel = new SimpleChannel();
+sendChannel.send("I can send only");
 
-        /**
-         * This channel can only be used to receive messages
-         */
-        ReceiveChannel receiveChannel = new SimpleChannel();
-        receiveChannel.receive();
+/**
+ * This channel can only be used to receive messages
+ */
+ReceiveChannel receiveChannel = new SimpleChannel();
+receiveChannel.receive();
 ```
 
 ####Routines
@@ -237,17 +237,17 @@ messages exclusively. To enforce this behaviour one can use send or recieve chan
 Routines are simple runnables that can be run by Lois on independent threads.
 
 ```java
-    /**
-    * Simple routine that accepts a channel as a constructor
-    * parameter.
-    */
-    Routine sampRoutine = new SampRoutine(stringChannel);
+/**
+* Simple routine that accepts a channel as a constructor
+* parameter.
+*/
+Routine sampRoutine = new SampRoutine(stringChannel);
 
-    /**
-    * Start the routine on an independent thread which can then
-    * receive or send messages over the channel.
-    */
-    Lois.go(sampRoutine);
+/**
+* Start the routine on an independent thread which can then
+* receive or send messages over the channel.
+*/
+Lois.go(sampRoutine);
 ```
 
 One need not use routines to use channels. Any way of sharing reference to a channel by independent threads should
@@ -279,25 +279,25 @@ The **mux** call multiplexes the messages from several source channels onto one 
                \____________
 
 ```java
-        /**
-         * Send only channels that will be multiplexed
-         */
-        SendChannel sourceChannel1 = new SimpleChannel();
-        SendChannel sourceChannel2 = new BufferedChannel(3);
+/**
+ * Send only channels that will be multiplexed
+ */
+SendChannel sourceChannel1 = new SimpleChannel();
+SendChannel sourceChannel2 = new BufferedChannel(3);
 
-        /**
-         * Receive only channel that will be used to output
-         * the muxed messages
-         */
-        ReceiveChannel combinedChannel = new SimpleChannel();
+/**
+ * Receive only channel that will be used to output
+ * the muxed messages
+ */
+ReceiveChannel combinedChannel = new SimpleChannel();
 
-        /**
-         * A variadic method that muxes source channels into
-         * the sink channel. It takes all messages recieved on
-         * souceChannels and transfers them to the combined
-         * channel.
-         */
-        Lois.mux(combinedChannel,sourceChannel1, sourceChannel2);
+/**
+ * A variadic method that muxes source channels into
+ * the sink channel. It takes all messages recieved on
+ * souceChannels and transfers them to the combined
+ * channel.
+ */
+Lois.mux(combinedChannel,sourceChannel1, sourceChannel2);
 ```
 
 #####Demultiplexing a single channel into several
@@ -310,25 +310,25 @@ The **deMux** call de-multiplexes the messages from a single source channel onto
                \____________
 
 ```java
-        /**
-         * Receive only channel that will be Demultiplexed
-         */
-        ReceiveChannel sourceChannel = new SimpleChannel();
+/**
+ * Receive only channel that will be Demultiplexed
+ */
+ReceiveChannel sourceChannel = new SimpleChannel();
 
-        /**
-         * Send only channels that will be used to output
-         * the Demuxed messages
-         */
-        SendChannel sinkChannel1 = new SimpleChannel();
-        SendChannel sinkChannel2 = new SimpleChannel();
+/**
+ * Send only channels that will be used to output
+ * the Demuxed messages
+ */
+SendChannel sinkChannel1 = new SimpleChannel();
+SendChannel sinkChannel2 = new SimpleChannel();
 
-        /**
-         * A variadic method that Demuxes source channel into
-         * the sink channels. It takes all messages recieved on
-         * souceChannel and transfers them to exactly one of
-         * the sink channels
-         */
-        Lois.deMux(sourceChannel,sinkChannel1, sinkChannel2);
+/**
+ * A variadic method that Demuxes source channel into
+ * the sink channels. It takes all messages recieved on
+ * souceChannel and transfers them to exactly one of
+ * the sink channels
+ */
+Lois.deMux(sourceChannel,sinkChannel1, sinkChannel2);
 ```
 
 #####Multicasting
@@ -341,25 +341,24 @@ The **multiCast** call multicasts the messages from a single source channel onto
                \____________&gt
 
 ```java
-        /**
-         * Receive only channel that will be multicasted
-         */
-        ReceiveChannel sourceChannel = new SimpleChannel();
+/**
+ * Receive only channel that will be multicasted
+ */
+ReceiveChannel sourceChannel = new SimpleChannel();
 
-        /**
-         * Send only channels that will be used to output
-         * the multicasted messages
-         */
-        SendChannel sinkChannel1 = new SimpleChannel();
-        SendChannel sinkChannel2 = new SimpleChannel();
+/**
+ * Send only channels that will be used to output
+ * the multicasted messages
+ */
+SendChannel sinkChannel1 = new SimpleChannel();
+SendChannel sinkChannel2 = new SimpleChannel();
 
-        /**
-         * A variadic method that multicasts source channel into
-         * the sink channels. It takes all messages recieved on
-         * souceChannel and sends them on all of  the sink channels
-         */
-        Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
-
+/**
+ * A variadic method that multicasts source channel into
+ * the sink channels. It takes all messages recieved on
+ * souceChannel and sends them on all of  the sink channels
+ */
+Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
 ```
 
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
