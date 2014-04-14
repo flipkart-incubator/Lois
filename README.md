@@ -46,7 +46,7 @@ typedChannel.send(" Hello ");
 String message = typedChannel.receive();
 ```
 
-In the above example we see how a channel can be used to send a receive messages in concurrent threads or Routines.
+In the above example we see how a channel can be used to send and receive messages between concurrent threads or Routines.
 Both send and receive can block and place the calling thread in a wait state until the message is either sendable or
 receivable.
 
