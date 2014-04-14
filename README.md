@@ -363,7 +363,7 @@ The **multiCast** call multicasts the messages from a single source channel onto
 ```
 
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
-order constructs between channels can be done with ease and one is only limited by one's imagination.
+order constructs between can be built with ease, one is only limited by one's imagination.
 
 ##License
 
