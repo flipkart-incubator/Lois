@@ -52,8 +52,8 @@ Process calculus. The pivotal idea behind concurrent process communicating over 
 
 <p>Lois brings the power and flexibility of this concurrent computational paradigm to Java.</p>
 
-<h2>
-<a name="channel" class="anchor" href="#channel"><span class="octicon octicon-link"></span></a>Channel</h2>
+<h3>
+<a name="channel" class="anchor" href="#channel"><span class="octicon octicon-link"></span></a>Channel</h3>
 
 <h4>
 <a name="a-conduit-for-communication-and-coordination" class="anchor" href="#a-conduit-for-communication-and-coordination"><span class="octicon octicon-link"></span></a>A conduit for communication and coordination</h4>
@@ -269,8 +269,8 @@ messages exclusively. To enforce this behaviour one can use send or recieve chan
 <span class="n">receiveChannel</span><span class="o">.</span><span class="na">receive</span><span class="o">();</span>
 </pre></div>
 
-<h4>
-<a name="routines" class="anchor" href="#routines"><span class="octicon octicon-link"></span></a>Routines</h4>
+<h3>
+<a name="routines" class="anchor" href="#routines"><span class="octicon octicon-link"></span></a>Routines</h3>
 
 <p>Routines are simple runnables that can be run by Lois on independent threads.</p>
 
@@ -290,8 +290,8 @@ messages exclusively. To enforce this behaviour one can use send or recieve chan
 <p>One need not use routines to use channels. Any way of sharing reference to a channel by independent threads should
 enable them to use the channel to send and receive messages.</p>
 
-<h4>
-<a name="value-vs-reference" class="anchor" href="#value-vs-reference"><span class="octicon octicon-link"></span></a>Value vs Reference</h4>
+<h3>
+<a name="value-vs-reference" class="anchor" href="#value-vs-reference"><span class="octicon octicon-link"></span></a>Value vs Reference</h3>
 
 <p>The value of <strong>"Don't communicate by sharing state, share state by communicating"</strong> can only be realized if there is
 no shared state among concurrent threads. To accomplish this one should refrain from sharing references to the same
@@ -304,8 +304,8 @@ This ensures that a channel can be sent over channels while still retaining the 
 any threads that still have a reference to the sent/received channel. This leads to incredible flexibility and power
 where channels can be used to dynamically alter the network of communicating and coordinating nodes at runtime.</p>
 
-<h4>
-<a name="higher-order-channel-usage" class="anchor" href="#higher-order-channel-usage"><span class="octicon octicon-link"></span></a>Higher order channel usage</h4>
+<h3>
+<a name="higher-order-channel-usage" class="anchor" href="#higher-order-channel-usage"><span class="octicon octicon-link"></span></a>Higher order channel usage</h3>
 
 <p>Lois also provides several simple ways of connecting channels together to create useful patterns.</p>
 
@@ -389,6 +389,65 @@ where channels can be used to dynamically alter the network of communicating and
 <p>These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.</p>
 
+<h3>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<h4>
+<a name="simple-parllelization" class="anchor" href="#simple-parllelization"><span class="octicon octicon-link"></span></a>Simple parllelization</h4>
+
+<p>In this example we create a simple web page downloader using multiple parallel crawlers
+and a web page persister.</p>
+
+<div class="highlight highlight-java"><pre><span class="c1">//Create a list to hold worker channels</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;&gt;</span> <span class="n">crawlerChannels</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;&gt;();</span>
+
+<span class="c1">//create 10 crawlers each with a dedicated channel over which they will</span>
+<span class="c1">//send the webpages they crawl.</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">workerCount</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">workerCount</span><span class="o">&lt;</span><span class="mi">10</span><span class="o">;</span><span class="n">workerCount</span><span class="o">++){</span>
+
+    <span class="c1">//create a crawlerChannel</span>
+    <span class="n">Channel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;</span> <span class="n">crawlerChannel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedChannel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;(</span><span class="mi">10</span><span class="o">);</span>
+
+    <span class="c1">//run a crawler on an independent thread with a beginning url and</span>
+    <span class="c1">//a crawlerChannel over which to send web pages</span>
+    <span class="n">Lois</span><span class="o">.</span><span class="na">go</span><span class="o">(</span><span class="k">new</span> <span class="n">Crawler</span><span class="o">(</span><span class="n">getBeginUrl</span><span class="o">(),</span> <span class="n">crawlerChannel</span><span class="o">));</span>
+
+    <span class="c1">//add the crawler channel to list of crawlerchannels</span>
+    <span class="n">crawlerChannels</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">crawlerChannel</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//create a sink channel to consume messages from all the crawler channels</span>
+<span class="n">SendChannel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;</span> <span class="n">sinkChannel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedChannel</span><span class="o">&lt;</span><span class="n">WebPage</span><span class="o">&gt;(</span><span class="mi">10</span><span class="o">);</span>
+
+<span class="c1">//multiplex crawler channels on to a sink channel</span>
+<span class="n">Lois</span><span class="o">.</span><span class="na">mux</span><span class="o">(</span><span class="n">sinkChannel</span><span class="o">,</span> <span class="n">crawlerChannels</span><span class="o">);</span>
+
+<span class="c1">//persist webpages on disk</span>
+<span class="n">Lois</span><span class="o">.</span><span class="na">go</span><span class="o">(</span><span class="k">new</span> <span class="n">WebPagePersister</span><span class="o">(</span><span class="n">sinkChannel</span><span class="o">));</span>
+</pre></div>
+
+<h4>
+<a name="rudimentary-connection-pool" class="anchor" href="#rudimentary-connection-pool"><span class="octicon octicon-link"></span></a>Rudimentary Connection Pool</h4>
+
+<p>In this example we create a simple, threadsafe connection pool.</p>
+
+<div class="highlight highlight-java"><pre><span class="c1">//creates a list of 5 connections</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">connectionList</span> <span class="o">=</span> <span class="n">ConnectionFactory</span><span class="o">.</span><span class="na">createConnections</span><span class="o">(</span><span class="s">"localhost"</span><span class="o">,</span> <span class="mi">80</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+
+<span class="c1">//create a BufferedChannel to hold 5 connections</span>
+<span class="n">Channel</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;</span> <span class="n">connectionPoolChannel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedChannel</span><span class="o">&lt;</span><span class="n">Connection</span><span class="o">&gt;(</span><span class="mi">5</span><span class="o">);</span>
+
+<span class="k">for</span> <span class="o">(</span><span class="n">Connection</span> <span class="nl">connection:</span> <span class="n">connectionList</span><span class="o">){</span>
+    <span class="n">connectionPoolChannel</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">connection</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">//to take a connection from the pool any thread can receive a connection</span>
+<span class="n">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">connectionPoolChannel</span><span class="o">.</span><span class="na">receive</span><span class="o">();</span>
+
+<span class="c1">//to release a connection any thread can send it to the channel</span>
+<span class="n">connectionPoolChannel</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">connection</span><span class="o">);</span>
+</pre></div>
+
 <h2>
 <a name="maven-artifact" class="anchor" href="#maven-artifact"><span class="octicon octicon-link"></span></a>Maven Artifact</h2>
 
@@ -401,7 +460,7 @@ order constructs between can be built with ease, one is only limited by one's im
     <span class="nt">&lt;/repository&gt;</span>
 </pre></div>
 
-<p>And add the following dependency to start using GraceKelly in your maven project.</p>
+<p>And add the following dependency to start using Lois in your maven project.</p>
 
 <div class="highlight highlight-xml"><pre>   <span class="nt">&lt;dependency&gt;</span>
      <span class="nt">&lt;groupId&gt;</span>com.flipkart.lego<span class="nt">&lt;/groupId&gt;</span>
