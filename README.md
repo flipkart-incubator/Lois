@@ -275,7 +275,7 @@ Lois also provides several simple ways of connecting channels together to create
 The **mux** call multiplexes the messages from several source channels onto one sink channel.
                 ____________
                /
-     &lt----- mux ----------
+     <----- mux ----------
                \____________
 
 ```java
@@ -306,7 +306,7 @@ The **deMux** call de-multiplexes the messages from a single source channel onto
 
                 ____________
                /
-     &gt----- deMux --------
+     >----- deMux --------
                \____________
 
 ```java
@@ -335,10 +335,10 @@ Lois.deMux(sourceChannel,sinkChannel1, sinkChannel2);
 
 The **multiCast** call multicasts the messages from a single source channel onto several sink channels.
 
-                ____________
-               /            &gt
-     --multiCast -----------&gt
-               \____________&gt
+                ____________>
+               /
+     --multiCast ----------->
+               \____________>
 
 ```java
 /**
