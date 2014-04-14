@@ -10,13 +10,13 @@
     <packaging>jar</packaging>
 
     <description>Go like channels for java</description>
-    <url>http://flipkart.github.io/Lois/</url>
+    <url>http://flipkart-incubator.github.io/Lois/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/Flipkart/Lois.git</connection>
-        <developerConnection>scm:git:https://github.com/Flipkart/Lois.git</developerConnection>
+        <connection>scm:git:https://github.com/flipkart-incubator/Lois.git</connection>
+        <developerConnection>scm:git:https://github.com/flipkart-incubator/Lois.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/Flipkart/Lois</url>
+        <url>https://github.com/flipkart-incubator/Lois</url>
     </scm>
 
     <licenses>
