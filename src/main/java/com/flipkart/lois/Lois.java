@@ -48,7 +48,7 @@ public class Lois {
      */
     public static void go(List<Routine> routines) {
         for (Routine routine: routines){
-            executorService.execute((Runnable)routine);
+            executorService.execute(routine);
         }
     }
 

@@ -87,7 +87,7 @@ public class BufferedChannel<T> implements Channel<T> {
 
     @Override
     public void send(final T message, final long timeOut, final TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
-        boolean sent=false;
+        boolean sent;
         if(isOpen())
             sent = buffer.offer(replicateMessage(message), timeOut, timeUnit);
         else
