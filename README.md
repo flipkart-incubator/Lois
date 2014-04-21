@@ -266,6 +266,10 @@ This ensures that a channel can be sent over channels while still retaining the 
 any threads that still have a reference to the sent/received channel. This leads to incredible flexibility and power
 where channels can be used to dynamically alter the network of communicating and coordinating nodes at runtime.
 
+If one can constrain their messages to be immutable, then they can take advantage of the more efficient pass by reference
+ channel mechanisms. The **BufferedPassByRefChannel** or **SimplePassByRefChannel** are pass by reference alternatives
+to **BufferedChannel** and **SimpleChannel**.
+
 ###Higher order channel usage
 
 Lois also provides several simple ways of connecting channels together to create useful patterns.

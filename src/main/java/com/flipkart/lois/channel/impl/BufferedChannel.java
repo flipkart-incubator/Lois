@@ -35,8 +35,8 @@ import java.util.concurrent.TimeoutException;
 
 public class BufferedChannel<T> implements Channel<T> {
 
-    private final ArrayBlockingQueue<T> buffer;
-    private volatile boolean isChannelOpen = true;
+    protected final ArrayBlockingQueue<T> buffer;
+    protected volatile boolean isChannelOpen = true;
     private final int bufferSize;
 
     public BufferedChannel(final int bufferSize) {
@@ -87,7 +87,7 @@ public class BufferedChannel<T> implements Channel<T> {
 
     @Override
     public void send(final T message, final long timeOut, final TimeUnit timeUnit) throws ChannelClosedException, InterruptedException, TimeoutException {
-        boolean sent=false;
+        boolean sent;
         if(isOpen())
             sent = buffer.offer(replicateMessage(message), timeOut, timeUnit);
         else
