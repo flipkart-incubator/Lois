@@ -304,6 +304,10 @@ This ensures that a channel can be sent over channels while still retaining the 
 any threads that still have a reference to the sent/received channel. This leads to incredible flexibility and power
 where channels can be used to dynamically alter the network of communicating and coordinating nodes at runtime.</p>
 
+<p>If one can constrain their messages to be immutable, then they can take advantage of the more efficient pass by reference
+ channel mechanisms. The <strong>BufferedPassByRefChannel</strong> or <strong>SimplePassByRefChannel</strong> are pass by reference alternatives
+to <strong>BufferedChannel</strong> and <strong>SimpleChannel</strong>.</p>
+
 <h3>
 <a name="higher-order-channel-usage" class="anchor" href="#higher-order-channel-usage"><span class="octicon octicon-link"></span></a>Higher order channel usage</h3>
 
