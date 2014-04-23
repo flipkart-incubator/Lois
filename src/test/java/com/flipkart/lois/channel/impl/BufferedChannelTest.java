@@ -318,6 +318,10 @@ public class BufferedChannelTest {
         assert channel.isSendable();
         channel.send("dude");
         assert !channel.isSendable();
+        channel.receive();
+        assert channel.isSendable();
+        channel.close();
+        assert !channel.isSendable();
     }
 
     @Test
