@@ -304,20 +304,36 @@ public class BufferedChannelTest {
 
     @Test
     public void testIsReceivable() throws Exception {
+        boolean channelClosedExceptionThrown = false;
         Channel<String> channel = new BufferedChannel<String>(2);
         assert !channel.isReceivable();
         channel.send("dude");
         assert channel.isReceivable();
+        channel.close();
+        try {
+            channel.isReceivable();
+        } catch (ChannelClosedException channelClosedException){
+            channelClosedExceptionThrown = true;
+        }
+        assert channelClosedExceptionThrown;
     }
 
     @Test
     public void testIsSendable() throws Exception {
+        boolean channelClosedExceptionThrown = false;
         Channel<String> channel = new BufferedChannel<String>(2);
         assert channel.isSendable();
         channel.send("dude");
         assert channel.isSendable();
         channel.send("dude");
         assert !channel.isSendable();
+        channel.close();
+        try {
+            channel.isSendable();
+        } catch (ChannelClosedException channelClosedException){
+            channelClosedExceptionThrown = true;
+        }
+        assert channelClosedExceptionThrown;
     }
 
     @Test

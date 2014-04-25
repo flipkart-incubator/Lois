@@ -19,4 +19,4 @@
 *.log
 upload.py
 *.json
-
+to_clojars
