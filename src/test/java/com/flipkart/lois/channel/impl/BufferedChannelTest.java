@@ -73,7 +73,7 @@ public class BufferedChannelTest {
         }
 
         @Override
-        public boolean isReceivable() {
+        public boolean isReceivable() throws ChannelClosedException {
             return false;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
@@ -103,7 +103,7 @@ public class BufferedChannelTest {
         }
 
         @Override
-        public boolean isSendable() {
+        public boolean isSendable() throws ChannelClosedException {
             return false;  //To change body of implemented methods use File | Settings | File Templates.
         }
     }

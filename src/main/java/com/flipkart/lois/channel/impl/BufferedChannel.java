@@ -116,12 +116,12 @@ public class BufferedChannel<T> implements Channel<T> {
     }
 
     @Override
-    public boolean isReceivable() {
+    public boolean isReceivable() throws ChannelClosedException {
         return buffer.remainingCapacity() < bufferSize;
     }
 
     @Override
-    public boolean isSendable() {
+    public boolean isSendable() throws ChannelClosedException {
         return isOpen() && buffer.remainingCapacity() > 0;
     }
 

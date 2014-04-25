@@ -76,6 +76,7 @@ public interface ReceiveChannel<T> {
     /**
      * Returns true if a message can be received on the channel
      * @return true if a message can be received on the channel
+     * @throws ChannelClosedException
      */
-    boolean isReceivable();
+    boolean isReceivable() throws ChannelClosedException;
 }

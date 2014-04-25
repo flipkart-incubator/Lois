@@ -76,7 +76,8 @@ public interface SendChannel<T> {
     /**
      * Returns true if a message can be sent on the channel
      * @return true if a message can be sent on the channel
+     * @throws ChannelClosedException
      */
-    boolean isSendable();
+    boolean isSendable() throws ChannelClosedException;
 
 }
