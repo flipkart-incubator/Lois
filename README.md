@@ -1,5 +1,5 @@
-#Lois
-####Golang like channels for java
+# Lois
+#### Golang like channels for java
 
 Lois is a Java library that provides golang like channel abstraction and implementation.
 Go's channel abstraction is heavily influenced by Communicating Sequential Processes(CSP) and
@@ -9,8 +9,8 @@ Process calculus. The pivotal idea behind concurrent process communicating over 
 
 Lois brings the power and flexibility of this concurrent computational paradigm to Java.
 
-###Channel
-####A conduit for communication and coordination
+### Channel
+#### A conduit for communication and coordination
 
 In Lois a channel is a mechanism for two independent threads of execution or **Routines** to either communicate or
 coordinate with each other. A channel can be typed and will carry a message only of the appropriate type, it can
@@ -28,7 +28,7 @@ Channel<String> typedChannel = new SimpleChannel<String>();
 Channel untypedChannel = new SimpleChannel();
 ```
 
-####Send and Receive
+#### Send and Receive
 
 Send and receive are the most basic operations on a channel. The variants of these operations are the fundamental
 way in which threads and Routines use to communicate and coordinate with each other. Let's look at the basic send
@@ -133,7 +133,7 @@ channel.isSendable();
 channel.isReceivable();
 ```
 
-####Closed for business
+#### Closed for business
 
 A channel can be in one of two states; either **open** or **closed**. By default, at creation all channel's are open
 and can send or receive messages freely. But a channel can be closed and once closed cannot be opened again.
@@ -169,7 +169,7 @@ check whether a channel is open or closed in the following way.
 channel.isOpen();
 ```
 
-####Buffered and Simple channels
+#### Buffered and Simple channels
 
 The difference between a Buffered and a Simple channel is the number of messages each can successfully hold. A simple
 channel can hold only one message in the channel.
@@ -232,7 +232,7 @@ ReceiveChannel receiveChannel = new SimpleChannel();
 receiveChannel.receive();
 ```
 
-###Routines
+### Routines
 
 Routines are simple runnables that can be run by Lois on independent threads.
 
@@ -253,7 +253,7 @@ Lois.go(sampRoutine);
 One need not use routines to use channels. Any way of sharing reference to a channel by independent threads should
 enable them to use the channel to send and receive messages.
 
-###Value vs Reference
+### Value vs Reference
 
 The value of **"Don't communicate by sharing state, share state by communicating"** can only be realized if there is
 no shared state among concurrent threads. To accomplish this one should refrain from sharing references to the same
@@ -270,11 +270,11 @@ If one can constrain their messages to be immutable, then they can take advantag
  channel mechanisms. The **BufferedPassByRefChannel** or **SimplePassByRefChannel** are pass by reference alternatives
 to **BufferedChannel** and **SimpleChannel**.
 
-###Higher order channel usage
+### Higher order channel usage
 
 Lois also provides several simple ways of connecting channels together to create useful patterns.
 
-#####Multiplexing several channels into one
+##### Multiplexing several channels into one
 
 The **mux** call multiplexes the messages from several source channels onto one sink channel.
 
@@ -300,7 +300,7 @@ ReceiveChannel combinedChannel = new SimpleChannel();
 Lois.mux(combinedChannel,sourceChannel1, sourceChannel2);
 ```
 
-#####Demultiplexing a single channel into several
+##### Demultiplexing a single channel into several
 
 The **deMux** call de-multiplexes the messages from a single source channel onto several sink channels.
 
@@ -326,7 +326,7 @@ SendChannel sinkChannel2 = new SimpleChannel();
 Lois.deMux(sourceChannel,sinkChannel1, sinkChannel2);
 ```
 
-#####Multicasting
+##### Multicasting
 
 The **multiCast** call multicasts the messages from a single source channel onto several sink channels.
 
@@ -354,9 +354,9 @@ Lois.multiCast(sourceChannel,sinkChannel1, sinkChannel2);
 These are just some simple ways in which channels can be combined, they are by no means exhaustive and similar higher
 order constructs between can be built with ease, one is only limited by one's imagination.
 
-###Examples
+### Examples
 
-####Simple parllelization
+#### Simple parllelization
 
 In this example we create a simple web page downloader using multiple parallel crawlers
 and a web page persister.
@@ -390,7 +390,7 @@ Lois.mux(sinkChannel, crawlerChannels);
 Lois.go(new WebPagePersister(sinkChannel));
 ```
 
-####Rudimentary Connection Pool
+#### Rudimentary Connection Pool
 
 In this example we create a simple, threadsafe connection pool.
 
@@ -412,7 +412,7 @@ Connection connection = connectionPoolChannel.receive();
 connectionPoolChannel.send(connection);
 ```
 
-##Maven Artifact
+## Maven Artifact
 
 Add the following repository to your pom.xml
 
@@ -434,16 +434,16 @@ And add the following dependency to start using Lois in your maven project.
    </dependency>
 ```
 
-##Documentation
+## Documentation
 
 The api docs can be found [here](http://flipkart-incubator.github.io/Lois/javadoc/index.html)
 
-##Contribution, Bugs and Feedback
+## Contribution, Bugs and Feedback
 
 For bugs, questions and discussions please use the [Github Issues](https://github.com/flipkart-incubator/Lois/issues).
 Please follow the [contribution guidelines](https://github.com/flipkart-incubator/Lois/blob/master/CONTRIBUTING.md) when submitting pull requests.
 
-##License
+## License
 
 Copyright 2014 Flipkart Internet, pvt ltd.
 
