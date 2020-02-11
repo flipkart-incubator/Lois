@@ -58,7 +58,7 @@
     <repositories>
         <repository>
             <id>sonatype.releases</id>
-            <url>http://oss.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </repositories>
     
